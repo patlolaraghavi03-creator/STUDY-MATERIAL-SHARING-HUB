@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Material Sharing Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> StudyHub</a>
+            <nav class="nav-links">
+                <a href="#hero">Home</a>
+                <a href="#materials">Materials</a>
+                <a href="#upload-section" class="btn-nav">Upload Material</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Share Knowledge, Excel Together</h1>
+            <p>Your ultimate platform for college students and beginners to discover, share, and review top-notch study notes, guides, and assignments.</p>
+            <div class="hero-buttons">
+                <a href="#materials" class="btn btn-primary"><i class="fas fa-search"></i> Browse Notes</a>
+                <a href="#upload-section" class="btn btn-secondary"><i class="fas fa-cloud-upload-alt"></i> Share Material</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Search and Filter Bar -->
+        <section class="filter-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by title, subject, or author...">
+            </div>
+            <div class="filter-box">
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="Lecture Notes">Lecture Notes</option>
+                    <option value="Assignments">Assignments</option>
+                    <option value="Cheat Sheets">Cheat Sheets</option>
+                    <option value="Previous Exams">Previous Exams</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Materials Grid Section -->
+        <section id="materials" class="materials-section">
+            <div class="section-header">
+                <h2>Available Study Materials</h2>
+                <span id="materialCount" class="badge">0 materials</span>
+            </div>
+            <div id="loadingIndicator" class="loading-spinner hidden">
+                <i class="fas fa-spinner fa-spin"></i> Loading materials...
+            </div>
+            <div id="errorMessage" class="error-banner hidden"></div>
+            <div id="emptyState" class="empty-state hidden">
+                <i class="fas fa-folder-open"></i>
+                <p>No study materials found. Be the first to share one!</p>
+            </div>
+            <div id="materialsGrid" class="materials-grid">
+                <!-- Dynamically populated cards -->
+            </div>
+        </section>
+
+        <!-- Upload Form Section -->
+        <section id="upload-section" class="upload-section">
+            <div class="form-card">
+                <h2><i class="fas fa-upload"></i> Share New Study Material</h2>
+                <form id="uploadForm">
+                    <div class="form-group">
+                        <label for="title">Material Title *</label>
+                        <input type="text" id="title" required placeholder="e.g. Data Structures Complete Notes">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="subject">Subject / Course *</label>
+                            <input type="text" id="subject" required placeholder="e.g. Computer Science">
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category *</label>
+                            <select id="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Lecture Notes">Lecture Notes</option>
+                                <option value="Assignments">Assignments</option>
+                                <option value="Cheat Sheets">Cheat Sheets</option>
+                                <option value="Previous Exams">Previous Exams</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="author">Author / Contributor *</label>
+                            <input type="text" id="author" required placeholder="e.g. Alex Johnson">
+                        </div>
+                        <div class="form-group">
+                            <label for="fileUrl">Resource Link / File URL *</label>
+                            <input type="url" id="fileUrl" required placeholder="https://drive.google.com/...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description & Key Topics</label>
+                        <textarea id="description" rows="4" placeholder="Briefly describe what is covered in this material..."></textarea>
+                    </div>
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-block">
+                        <span id="btnText"><i class="fas fa-paper-plane"></i> Publish Material</span>
+                        <i id="btnSpinner" class="fas fa-spinner fa-spin hidden"></i>
+                    </button>
+                    <div id="formFeedback" class="form-feedback hidden"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>Edit Study Material</h2>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label for="editTitle">Title *</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editSubject">Subject *</label>
+                        <input type="text" id="editSubject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategory">Category *</label>
+                        <select id="editCategory" required>
+                            <option value="Lecture Notes">Lecture Notes</option>
+                            <option value="Assignments">Assignments</option>
+                            <option value="Cheat Sheets">Cheat Sheets</option>
+                            <option value="Previous Exams">Previous Exams</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editAuthor">Author *</label>
+                        <input type="text" id="editAuthor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editFileUrl">Resource Link *</label>
+                        <input type="url" id="editFileUrl" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editDescription">Description</label>
+                    <textarea id="editDescription" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Study Material Sharing Hub. Built for college students and beginners.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
